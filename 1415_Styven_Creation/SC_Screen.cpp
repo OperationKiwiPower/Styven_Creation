@@ -1,5 +1,5 @@
 #include "flib.h"
-#include "SC_Screen.h"
+/*
 
 void SC_SetScreenStruct(TScreen & Screen)
 {
@@ -13,3 +13,5 @@ void SC_SetScreenStruct(TScreen & Screen)
 	Screen.y.Quart = Screen.y.Half / 2;
 	Screen.y.TriQuart = Screen.y.Quart * 3;
 }
+*/
+
