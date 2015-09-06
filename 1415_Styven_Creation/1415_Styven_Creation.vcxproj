@@ -114,8 +114,8 @@
     <ClCompile Include="..\..\main\lib\flib\flib.cpp">
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
+    <ClCompile Include="..\..\main\lib\flib\flib_vec2.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SC_Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SC_Button.h" />
