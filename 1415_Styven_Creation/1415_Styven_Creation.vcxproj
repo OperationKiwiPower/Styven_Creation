@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SC_Button.h" />
+    <ClInclude Include="SC_CollisionTest.h" />
     <ClInclude Include="SC_Screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
