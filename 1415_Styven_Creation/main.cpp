@@ -6,16 +6,15 @@
 #include "SC_Button.h"
 #include "SC_CollisionTest.h"
 
-SC_Screen Display;
+Screen Display;
 Button b_Start;
-LineButton b_Exit;
 
 BoxCollider b_StartCollid;
 PointCollider b_Mousse;
 
 void Initialize()
 {
-	Display.Set_SCreen();
+	Display.Set_Screen();
 	b_StartCollid.tSpot_LH = TGfxVec2(100.0f, 100.0f);
 	b_StartCollid.tSpot_RD = TGfxVec2(200.0f, 150.0f);
 	b_Start.SC_SpriteButton(b_StartCollid.tSpot_LH, b_StartCollid.tSpot_RD, "Button", EGfxColor_Red);
@@ -25,7 +24,7 @@ void Update()
 	float fMousseX = float(GfxGetCurrentMouseX());
 	float fMousseY = float(GfxGetCurrentMouseY());
 	b_Mousse.tPoint = TGfxVec2(fMousseX, fMousseY);
-	if (b_Mousse.IsCollid(b_StartCollid))
+	if (b_StartCollid.IsCollid(b_Mousse))
 	{
 		b_Start.SC_GlowIt();
 		if (GfxInputIsJustPressed(EGfxInputID_MouseLeft))

@@ -1,10 +1,10 @@
 #ifndef SC_TSCREEN
 
-class SC_Screen
+class Screen
 {
 public:
 
-	void Set_SCreen();
+	void Set_Screen();
 
 	int m_iFull_X;
 	int m_iHalf_X;
@@ -18,7 +18,7 @@ public:
 
 };
 
-void SC_Screen::Set_SCreen()
+void Screen::Set_Screen()
 {
 	m_iFull_X = GfxGetDisplaySizeX();
 	m_iHalf_X = m_iFull_X / 2;
