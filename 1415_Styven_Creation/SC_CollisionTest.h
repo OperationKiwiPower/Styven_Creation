@@ -15,7 +15,7 @@ public:
 
 	bool IsCollid(BoxCollider m_bColid);
 	bool IsCollid(PointCollider m_bColid);
-	bool IsCollid(SphereCollider m_bColid);
+	//bool IsCollid(SphereCollider m_bColid);
 
 };
 class SphereCollider
