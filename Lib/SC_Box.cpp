@@ -54,6 +54,7 @@ void TBox::CreateBox(unsigned int iColor)
 	GfxSpriteSetFilteringEnabled(pSprite, false);
 	GfxSpriteSetPivot(pSprite, 0.5f, 0.5f);
 	SetColor(iColor);
+	m_Collider.pDessin = GfxLineSpriteCreate();
 }
 void TBox::SetBox(TGfxVec2 Position, float W_Ray, float H_Ray, float Angle)
 {
@@ -109,6 +110,7 @@ void TBox::RenderBox()
 void TBox::Render_O_Line()
 {
 	if (bIsDrawable)GfxSpriteRender(pLineSprite);
+	if (bIsDrawable)GfxSpriteRender(m_Collider.pDessin);
 }
 void TBox::Render_O_Img()
 {

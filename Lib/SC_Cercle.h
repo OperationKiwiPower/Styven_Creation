@@ -10,20 +10,21 @@ class TCercle
 public:
 
 	TGfxSprite * pSprite;
+	TSphereCollider m_ShpereCollid;
 
 	TCercle() = default;
 	TCercle(TGfxVec2 tPos,float Radius);
 
 	TGfxVec2 GetPosition();
-	TSphereCollider m_ShpereCollid;
+
 	void DrawCercle(int iNumberRay);
 	void AddForce(TGfxVec2 tVecDir);
 	void SetPosition(TGfxVec2 tPos);
 	void SetCollider();
+	float fRadius;
 
 private:
 	TGfxVec2 tPosition;
-	float fRadius;
 
 };
 

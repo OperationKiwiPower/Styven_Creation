@@ -4,6 +4,7 @@
 #include "SC_CollisionTest.h"
 #include "SC_Box.h"
 #include "SC_Cercle.h"
+#include "SC_Pantone.h"
 
 class TBox;
 class TCercle;

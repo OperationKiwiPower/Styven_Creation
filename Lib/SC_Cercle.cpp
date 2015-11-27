@@ -4,7 +4,6 @@
 
 #include <math.h>
 
-
 TCercle::TCercle(TGfxVec2 tPos, float Radius)
 {
 	tPosition = tPos;
@@ -16,18 +15,17 @@ TCercle::TCercle(TGfxVec2 tPos, float Radius)
 	pSprite = GfxLineSpriteCreate();
 }
 
-void TCercle::SetCollider()
-{
-	m_ShpereCollid.tCenter = tPosition;
-	m_ShpereCollid.m_fRadius = fRadius;
-}
-
-
 TGfxVec2 TCercle::GetPosition()
 {
 	return tPosition;
 }
 
+
+void TCercle::SetCollider()
+{
+	m_ShpereCollid.tCenter = tPosition;
+	m_ShpereCollid.m_fRadius = fRadius;
+}
 void TCercle::SetPosition(TGfxVec2 tPos)
 {
 	tPosition = tPos;

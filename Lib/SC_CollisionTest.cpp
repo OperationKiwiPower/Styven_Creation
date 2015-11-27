@@ -41,18 +41,6 @@ bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
 	}
 	return false;
 }
-bool TBoxCollider::IsCollid(TPointCollider m_bColid)
-{
-	if (m_bColid.tPoint.x >= tSpot_LH.x &&
-		m_bColid.tPoint.x <= tSpot_RD.x &&
-		m_bColid.tPoint.y >= tSpot_LH.y &&
-		m_bColid.tPoint.y <= tSpot_RD.y)
-	{
-		return true;
-	}
-
-	return false;
-}
 bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 {
 	TGfxVec2 tPosition = tSpot_LH + ((tSpot_RD - tSpot_LH) / 2.0f);
@@ -73,8 +61,10 @@ bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 	}
 }
 
-bool TSphereCollider::IsCollid(TBoxCollider m_bColid , TGfxSprite * pSpriteVec)
+bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 {
+	GfxLineSpriteReset(m_bColid.pDessin);
+
 	TGfxVec2 tPosition = m_bColid.tSpot_LH + ((m_bColid.tSpot_RD - m_bColid.tSpot_LH) / 2.0f);
 	TGfxVec2 tVec = TGfxVec2(tCenter.x - tPosition.x, tCenter.y - tPosition.y);
 	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(m_bColid.fAngle));
@@ -82,20 +72,64 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid , TGfxSprite * pSpriteVec)
 
 	TGfxVec2 tDist = TGfxVec2(tVec.DotProduct(tNormX), tVec.DotProduct(tNormY));
 	TGfxVec2 tRay = m_bColid.tSpot_RD - tPosition;
-//	if(!GfxInputIsPressed(EGfxInputID_MouseLeft))
-	{
-		GfxLineSpriteSetDrawingColor(pSpriteVec, EGfxColor_Green);
-		GfxLineSpriteJumpTo(pSpriteVec, tPosition.x, tPosition.y);
-		GfxLineSpriteLineTo(pSpriteVec, tPosition.x + (tNormX.x * tDist.x), tPosition.y + (tNormX.y * tDist.x));
 
-		GfxLineSpriteSetDrawingColor(pSpriteVec, EGfxColor_Red);
-		GfxLineSpriteJumpTo(pSpriteVec, tPosition.x, tPosition.y);
-		GfxLineSpriteLineTo(pSpriteVec, tPosition.x + (tNormY.x * tDist.y), tPosition.y + (tNormY.y * tDist.y));
+	//cercle
+	TGfxVec2 tCloseXCercle;
+	TGfxVec2 tCloseYCercle;
+
+	if (tDist.x != 0.0f)
+	{
+		GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Rouge);
+		GfxLineSpriteJumpTo(m_bColid.pDessin, tCenter.x, tCenter.y);
+		tCloseXCercle = TGfxVec2(tNormX*tDist.x).Normalize()*m_fRadius;
+		GfxLineSpriteLineTo(m_bColid.pDessin, tCenter.x - tCloseXCercle.x, tCenter.y - tCloseXCercle.y);
 	}
+
+	if (tDist.y != 0.0f)
+	{
+		GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Vert);
+		GfxLineSpriteJumpTo(m_bColid.pDessin, tCenter.x, tCenter.y);
+		tCloseYCercle = TGfxVec2(tNormY*tDist.y).Normalize()*m_fRadius;
+		GfxLineSpriteLineTo(m_bColid.pDessin, tCenter.x - tCloseYCercle.x, tCenter.y - tCloseYCercle.y);
+	}
+	//box
+	GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Rouge);
+	GfxLineSpriteJumpTo(m_bColid.pDessin, tPosition.x, tPosition.y);
+	TGfxVec2 tCloseX = TGfxVec2(tNormX*tDist.x);
+	GfxLineSpriteLineTo(m_bColid.pDessin, tPosition.x + tCloseX.x, tPosition.y + tCloseX.y);
+	GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Vert);
+	GfxLineSpriteJumpTo(m_bColid.pDessin, tPosition.x, tPosition.y);
+	TGfxVec2 tCloseY = TGfxVec2(tNormY*tDist.y);
+	GfxLineSpriteLineTo(m_bColid.pDessin, tPosition.x + tCloseY.x, tPosition.y + tCloseY.y);
 
 
 	if (abs(tDist.x) <= abs(tRay.x) && abs(tDist.y) <= abs(tRay.y))
 	{
+		tAntiForce = TGfxVec2(0.0f, 0.0f);
+		return true;
+	}
+	else if (abs(tDist.x - tCloseXCercle.x) <= abs(tRay.x) && abs(tDist.y - tCloseXCercle.y) <= abs(tRay.y))
+	{
+		if (abs(tDist.x) >= abs(tDist.y))
+		{
+			tAntiForce = tNormX;
+		}
+		else
+		{
+			tAntiForce = tNormY;
+		}
+		return true;
+	}
+	else if (abs(tDist.x - tCloseYCercle.x) <= abs(tRay.x) && abs(tDist.y - tCloseYCercle.y) <= abs(tRay.y))
+	{
+		if (abs(tDist.x) >= abs(tDist.y))
+		{
+			tAntiForce = tNormX;
+		}
+		else
+		{
+			tAntiForce = tNormY;
+		}
 		return true;
 	}
 	else
