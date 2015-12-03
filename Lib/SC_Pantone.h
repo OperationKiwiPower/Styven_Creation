@@ -45,9 +45,9 @@
 #define EPantone_Brun GfxColor( 200, 100, 0, 255 )
 
 #define EPantone_Noir GfxColor( 0, 0, 0, 255 )
-#define EPantone_Gris_Foncer GfxColor( 200, 200, 200, 255 )
+#define EPantone_Gris_Clair GfxColor( 200, 200, 200, 255 )
 #define EPantone_Gris GfxColor( 150, 150, 150, 255 )
-#define EPantone_Gris_Clair GfxColor( 100, 100, 100, 255 )
+#define EPantone_Gris_Foncer GfxColor( 100, 100, 100, 255 )
 
 #define EPantone_MI_Blanc GfxColor( 255, 255, 255, 125 )
 #define EPantone_MI_Noir GfxColor( 0, 0, 0, 125 )

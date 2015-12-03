@@ -1,6 +1,7 @@
 #include "flib.h"
 #include "flib_vec2.h"
 #include <math.h>
+#include <stdio.h>
 #include "SC_CollisionTest.h"
 #include "SC_Box.h"
 
@@ -36,12 +37,12 @@ float TBox::GetAngle()
 //----SET
 void TBox::CreateBox(unsigned int iColor)
 {
-
+	if (pTextSprite == nullptr)
+	{
+		pTextSprite = GfxTextSpriteCreate();
+		GfxSpriteSetFilteringEnabled(pTextSprite, false);
+	}
 	bIsDrawable = true;
-	int r = iColor >> 24 & 255;
-	int g = iColor >> 16 & 255;
-	int b = iColor >> 8 & 255;
-	iColor = GfxColor(r, g, b, 150);
 
 	//Line
 	pLineSprite = GfxLineSpriteCreate();
@@ -72,52 +73,87 @@ void TBox::SetColor(const unsigned int iColor)
 {
 	GfxSpriteSetColor(pSprite, iColor);
 }
+void TBox::SetTexte(char * pChar)
+{
+	GfxTextSpritePrintf(pTextSprite, pChar);
+
+	float fSizeX = GfxSpriteGetSizeX(pTextSprite)/2.0f;
+	float fSizeY = GfxSpriteGetSizeY(pTextSprite)/2.0f;
+	pText = pChar;
+	GfxSpriteSetPivot(pTextSprite, fSizeX, fSizeY);
+	GfxSpriteSetPosition(pTextSprite, tCenter.x, tCenter.y);
+}
+void TBox::SetTexte(int iValeur)
+{
+	if (pTextSprite == nullptr)
+	{
+		pTextSprite = GfxTextSpriteCreate();
+	}
+	GfxTextSpritePrintf(pTextSprite, "%i\n",iValeur);
+	iText = iValeur;
+
+	float fSizeX = GfxSpriteGetSizeX(pTextSprite) / 2.0f;
+	float fSizeY = GfxSpriteGetSizeY(pTextSprite) / 2.0f;
+
+	GfxSpriteSetPivot(pTextSprite, fSizeX, fSizeY);
+	GfxSpriteSetPosition(pTextSprite, tCenter.x, tCenter.y);
+}
 
 //----Show
 void TBox::DrawBox()
 {
-	GfxLineSpriteReset(pLineSprite);
-	GfxLineSpriteSetDrawingColor(pLineSprite, EGfxColor_White);
-	//Line
 	if (pSprite != nullptr)
 	{
 		GfxSpriteSetPosition(pSprite, tCenter.x, tCenter.y);
 		GfxSpriteSetAngle(pSprite, GfxMathDegToRad(-fAngle));
 		GfxSpriteSetScale(pSprite, Ray_W*2.0f, Ray_H*2.0f);
 	}
+	//Line
+	if (pLineSprite != nullptr)
+	{
+		GfxLineSpriteReset(pLineSprite);
+		GfxLineSpriteSetDrawingColor(pLineSprite, GfxColor(150, 150, 150, 255));
+		TGfxVec2 tAxisX = TGfxVec2(Ray_W, 0).Rotate(GfxMathDegToRad(fAngle));
+		TGfxVec2 tAxisY = TGfxVec2(0, Ray_H).Rotate(GfxMathDegToRad(fAngle));
 
-	GfxLineSpriteSetDrawingColor(pLineSprite, GfxColor(150, 150, 150, 255));
+		TGfxVec2 tUR = TGfxVec2(tCenter.x + tAxisX.x + tAxisY.x, tCenter.y + tAxisX.y + tAxisY.y);
+		TGfxVec2 tUL = TGfxVec2(tCenter.x - tAxisX.x + tAxisY.x, tCenter.y - tAxisX.y + tAxisY.y);
+		TGfxVec2 tDL = TGfxVec2(tCenter.x - tAxisX.x - tAxisY.x, tCenter.y - tAxisX.y - tAxisY.y);
+		TGfxVec2 tDR = TGfxVec2(tCenter.x + tAxisX.x - tAxisY.x, tCenter.y + tAxisX.y - tAxisY.y);
 
-	TGfxVec2 tAxisX = TGfxVec2(Ray_W, 0).Rotate(GfxMathDegToRad(fAngle));
-	TGfxVec2 tAxisY = TGfxVec2(0, Ray_H).Rotate(GfxMathDegToRad(fAngle));
-
-	TGfxVec2 tUR = TGfxVec2(tCenter.x + tAxisX.x + tAxisY.x, tCenter.y + tAxisX.y + tAxisY.y);
-	TGfxVec2 tUL = TGfxVec2(tCenter.x - tAxisX.x + tAxisY.x, tCenter.y - tAxisX.y + tAxisY.y);
-	TGfxVec2 tDL = TGfxVec2(tCenter.x - tAxisX.x - tAxisY.x, tCenter.y - tAxisX.y - tAxisY.y);
-	TGfxVec2 tDR = TGfxVec2(tCenter.x + tAxisX.x - tAxisY.x, tCenter.y + tAxisX.y - tAxisY.y);
-
-	GfxLineSpriteJumpTo(pLineSprite, tUL.x, tUL.y);
-	GfxLineSpriteLineTo(pLineSprite, tDL.x, tDL.y);
-	GfxLineSpriteLineTo(pLineSprite, tDR.x, tDR.y);
-	GfxLineSpriteLineTo(pLineSprite, tUR.x, tUR.y);
-	GfxLineSpriteLineTo(pLineSprite, tUL.x, tUL.y);
+		GfxLineSpriteJumpTo(pLineSprite, tUL.x, tUL.y);
+		GfxLineSpriteLineTo(pLineSprite, tDL.x, tDL.y);
+		GfxLineSpriteLineTo(pLineSprite, tDR.x, tDR.y);
+		GfxLineSpriteLineTo(pLineSprite, tUR.x, tUR.y);
+		GfxLineSpriteLineTo(pLineSprite, tUL.x, tUL.y);
+	}
 }
 void TBox::RenderBox()
 {
 	Render_O_Img();
 	Render_O_Line();
+	Render_O_Text();
 }
 void TBox::Render_O_Line()
 {
-	if (bIsDrawable)GfxSpriteRender(pLineSprite);
-	if (bIsDrawable)GfxSpriteRender(m_Collider.pDessin);
+	if (bIsDrawable&& pLineSprite != nullptr)GfxSpriteRender(pLineSprite);
+	if (bIsDrawable&& m_Collider.pDessin != nullptr)GfxSpriteRender(m_Collider.pDessin);
 }
 void TBox::Render_O_Img()
 {
-	if (bIsDrawable)GfxSpriteRender(pSprite);
+	if (bIsDrawable&& pSprite != nullptr)GfxSpriteRender(pSprite);
+}
+void TBox::Render_O_Text()
+{
+	if (bIsDrawable)GfxSpriteRender(pTextSprite);
 }
 
 //----Box
+void TBox::SetAngle(float Angle)
+{
+	fAngle = Angle;
+	SetColliderAngle(fAngle);
+}
 void TBox::SetRayS(float Width_Ray, float Height_Ray)
 {
 	Ray_H = Height_Ray;
@@ -127,6 +163,11 @@ void TBox::SetCenter(TGfxVec2 tPosition)
 {
 	tCenter = tPosition;
 }
+void TBox::SetTextColor(unsigned int iColor)
+{
+	GfxSpriteSetColor(pTextSprite, iColor);
+}
+
 //----BoxCollider
 void TBox::SetColliderAngle(float fAngle)
 {
@@ -137,10 +178,5 @@ void TBox::SetCollider()
 	TGfxVec2 tRay(Ray_W, Ray_H);
 	m_Collider.tSpot_LH = TGfxVec2(tCenter - tRay);
 	m_Collider.tSpot_RD = TGfxVec2(tCenter + tRay);
-}
-void TBox::SetAngle(float Angle)
-{
-	fAngle = Angle;
-	SetColliderAngle(fAngle);
 }
 

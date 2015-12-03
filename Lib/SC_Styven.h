@@ -5,11 +5,14 @@
 #include "SC_Box.h"
 #include "SC_Cercle.h"
 #include "SC_Pantone.h"
+#include "SC_Lua.h"
+
+//Box --- BoxCollider --- Cercle --- CercleCollider --- Pantone
 
 class TBox;
-class TCercle;
-class TPointCollider;
 class TBoxCollider;
-class TSphereCollider;
+
+class TCercle;
+class TCercleCollider;
 
 #endif
