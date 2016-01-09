@@ -1,7 +1,7 @@
 #include"flib.h"
 #include"flib_vec2.h"
 #include"SC_CollisionTest.h"
-#include<math.h>
+//#include<math.h>
 
 
 bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
@@ -51,7 +51,7 @@ bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 	TGfxVec2 tDist = TGfxVec2(tVec.DotProduct(tNormX), tVec.DotProduct(tNormY));
 	TGfxVec2 tRay = tSpot_RD - tPosition;
 
-	if (abs(tDist.x) <= abs(tRay.x) && abs(tDist.y) <= abs(tRay.y))
+	if (fabs(tDist.x) <= fabs(tRay.x) && fabs(tDist.y) <= fabs(tRay.y))
 	{
 		return true;
 	}
@@ -103,14 +103,14 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 	GfxLineSpriteLineTo(m_bColid.pDessin, tPosition.x + tCloseY.x, tPosition.y + tCloseY.y);
 
 
-	if (abs(tDist.x) <= abs(tRay.x) && abs(tDist.y) <= abs(tRay.y))
+	if (fabs(tDist.x) <= fabs(tRay.x) && fabs(tDist.y) <= fabs(tRay.y))
 	{
 		tAntiForce = TGfxVec2(0.0f, 0.0f);
 		return true;
 	}
-	else if (abs(tDist.x - tCloseXCercle.x) <= abs(tRay.x) && abs(tDist.y - tCloseXCercle.y) <= abs(tRay.y))
+	else if (fabs(tDist.x - tCloseXCercle.x) <= fabs(tRay.x) && fabs(tDist.y - tCloseXCercle.y) <= fabs(tRay.y))
 	{
-		if (abs(tDist.x) >= abs(tDist.y))
+		if (fabs(tDist.x) >= fabs(tDist.y))
 		{
 			tAntiForce = tNormX;
 		}
@@ -120,9 +120,9 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 		}
 		return true;
 	}
-	else if (abs(tDist.x - tCloseYCercle.x) <= abs(tRay.x) && abs(tDist.y - tCloseYCercle.y) <= abs(tRay.y))
+	else if (fabs(tDist.x - tCloseYCercle.x) <= fabs(tRay.x) && fabs(tDist.y - tCloseYCercle.y) <= fabs(tRay.y))
 	{
-		if (abs(tDist.x) >= abs(tDist.y))
+		if (fabs(tDist.x) >= fabs(tDist.y))
 		{
 			tAntiForce = tNormX;
 		}

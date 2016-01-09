@@ -75,6 +75,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\..\Styven_Creation\Lib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -115,12 +116,8 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="..\..\main\lib\flib\flib_vec2.cpp" />
+    <ClCompile Include="..\Lib\SC_Styven.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SC_Button.h" />
-    <ClInclude Include="SC_CollisionTest.h" />
-    <ClInclude Include="SC_Screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

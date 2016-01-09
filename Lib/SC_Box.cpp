@@ -8,34 +8,60 @@
 //Construct && Destruct
 TBox::TBox(const unsigned int iColor)
 {
-	CreateBox(iColor);
-}
-TBox::~TBox()
-{
-
+	CreateBox(iColor, true, true,true);
 }
 //Public 
 
 //----GET
-TGfxVec2 TBox::GetCenter()
+TGfxVec2 TBox::GetCenter()const
 {
 	return tCenter;
 }
-TBoxCollider TBox::GetCollider()
+TBoxCollider TBox::GetCollider()const
 {
 	return m_Collider;
 }
-bool TBox::GetDrawable()
+unsigned int TBox::GetColor()const
+{
+	return iColor;
+}
+bool TBox::GetDrawable() const
 {
 	return bIsDrawable;
 }
-float TBox::GetAngle()
+float TBox::GetAngle() const
 {
 	return fAngle;
 }
 
 //----SET
-void TBox::CreateBox(unsigned int iColor)
+void TBox::CreateBox(unsigned int iColor, const bool bText, const bool bSprite, const bool bLine)
+{
+	if (pTextSprite == nullptr && bText)
+	{
+		pTextSprite = GfxTextSpriteCreate();
+		GfxSpriteSetFilteringEnabled(pTextSprite, false);
+	}
+	bIsDrawable = true;
+	if (bLine)
+	{
+		//Line
+		pLineSprite = GfxLineSpriteCreate();
+	}
+	if (bSprite)
+	{ 
+	//Image
+	TGfxImage * pImage = GfxImageCreate(1, 1);
+	GfxImageGetData(pImage)[0] = EGfxColor_White;
+	TGfxTexture * pTexture = GfxTextureCreate(pImage);
+	pSprite = GfxSpriteCreate(pTexture);
+	GfxSpriteSetFilteringEnabled(pSprite, false);
+	GfxSpriteSetPivot(pSprite, 0.5f, 0.5f);
+	SetColor(iColor);
+	}
+	m_Collider.pDessin = GfxLineSpriteCreate();
+}
+void TBox::CreateSpriteBox(TGfxTexture * pTexture,const unsigned int iColor, const int g_iTextureSize, int iTileX, int iTileY)
 {
 	if (pTextSprite == nullptr)
 	{
@@ -46,17 +72,24 @@ void TBox::CreateBox(unsigned int iColor)
 
 	//Line
 	pLineSprite = GfxLineSpriteCreate();
-		
+
 	//Image
 	TGfxImage * pImage = GfxImageCreate(1, 1);
 	GfxImageGetData(pImage)[0] = EGfxColor_White;
-	TGfxTexture * pTexture = GfxTextureCreate(pImage);
-	pSprite = GfxSpriteCreate(pTexture);
+	TGfxTexture * m_pTexture = GfxTextureCreate(pImage);
+	pSprite = GfxSpriteCreate(m_pTexture);
 	GfxSpriteSetFilteringEnabled(pSprite, false);
 	GfxSpriteSetPivot(pSprite, 0.5f, 0.5f);
 	SetColor(iColor);
+
+	pImgSprite = GfxSpriteCreate(pTexture);
+	//GfxSpriteSetFilteringEnabled(pImgSprite, false);
+	GfxSpriteSetCutout(pImgSprite, iTileX*g_iTextureSize, iTileY*g_iTextureSize, g_iTextureSize, g_iTextureSize);
+	GfxSpriteSetPivot(pImgSprite, g_iTextureSize / 2.0f, g_iTextureSize / 2.0f);
+
 	m_Collider.pDessin = GfxLineSpriteCreate();
 }
+
 void TBox::SetBox(TGfxVec2 Position, float W_Ray, float H_Ray, float Angle)
 {
 	SetCenter(Position);
@@ -69,9 +102,10 @@ void TBox::SetDrawable(bool bBool)
 {
 	bIsDrawable = bBool;
 }
-void TBox::SetColor(const unsigned int iColor)
+void TBox::SetColor(const unsigned int m_iColor)
 {
-	GfxSpriteSetColor(pSprite, iColor);
+	iColor = m_iColor;
+	GfxSpriteSetColor(pSprite, m_iColor);
 }
 void TBox::SetTexte(char * pChar)
 {
@@ -108,6 +142,13 @@ void TBox::DrawBox()
 		GfxSpriteSetAngle(pSprite, GfxMathDegToRad(-fAngle));
 		GfxSpriteSetScale(pSprite, Ray_W*2.0f, Ray_H*2.0f);
 	}
+	if (pImgSprite != nullptr)
+	{
+		GfxSpriteSetPosition(pImgSprite, tCenter.x, tCenter.y);
+		GfxSpriteSetAngle(pImgSprite, GfxMathDegToRad(-fAngle));
+		float fTextureSize = float(GfxSpriteGetTextureSizeX(pImgSprite) / 8);
+		GfxSpriteSetScale(pImgSprite, Ray_W / fTextureSize, Ray_W / fTextureSize);
+	}
 	//Line
 	if (pLineSprite != nullptr)
 	{
@@ -142,10 +183,11 @@ void TBox::Render_O_Line()
 void TBox::Render_O_Img()
 {
 	if (bIsDrawable&& pSprite != nullptr)GfxSpriteRender(pSprite);
+	if (bIsDrawable&& pImgSprite != nullptr)GfxSpriteRender(pImgSprite);
 }
 void TBox::Render_O_Text()
 {
-	if (bIsDrawable)GfxSpriteRender(pTextSprite);
+	if (bIsDrawable && pTextSprite!=nullptr)GfxSpriteRender(pTextSprite);
 }
 
 //----Box

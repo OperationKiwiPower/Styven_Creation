@@ -13,18 +13,19 @@ public:
 
 	TBox() = default;
 	TBox(unsigned int iColor);
-	~TBox();
 
 	//Create && draw
-	void CreateBox(unsigned int iColor);
+	void CreateBox(unsigned int iColor, const bool bText, const bool bSprite, const bool bLine);
+	void CreateSpriteBox(TGfxTexture * pTexture, const unsigned int iColor, const int g_iTextureSize, int iTileX, int iTileY);
 	void DrawBox();
 
 	//Get
-	TGfxVec2 GetCenter();
-	TBoxCollider GetCollider();
+	TGfxVec2 GetCenter() const;
+	TBoxCollider GetCollider() const;
 
-	bool GetDrawable();
-	float GetAngle();
+	unsigned int GetColor()const;
+	bool GetDrawable()const;
+	float GetAngle()const;
 
 	//Set
 	void SetAngle(float fAngle);
@@ -35,7 +36,7 @@ public:
 	void SetRayS(float Width_Ray, float Height_Ray);
 	void SetCollider();
 	void SetDrawable(bool bBool);
-	void SetColor(const unsigned int iColor);
+	void SetColor(const unsigned int m_iColor);
 	void SetBox(TGfxVec2 Position, float W_Ray, float H_Ray, float Angle);
 	void SetColliderAngle(float fAngle);
 	void SetTextColor(unsigned int iColor);
@@ -45,7 +46,7 @@ public:
 	void RenderBox();
 	void Render_O_Line();
 	void Render_O_Img();
-	void TBox::Render_O_Text();
+	void Render_O_Text();
 
 	char * pText;
 	int iText = -1;
@@ -55,12 +56,15 @@ private:
 	TGfxSprite * pLineSprite;	//OutLine
 	TGfxSprite * pSprite;		//Fill
 	TGfxSprite * pTextSprite;	//Number on squarre
+	TGfxSprite * pImgSprite;	//Image in squarre
 
 	bool bIsDrawable = false;	//If you can render it
 	TBoxCollider m_Collider;
 
-	TGfxVec2 tCenter;
+	unsigned int iColor;
 
+	TGfxVec2 tCenter;
+	
 	float Ray_H;
 	float Ray_W;
 	float fAngle = 0;

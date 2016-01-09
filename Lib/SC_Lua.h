@@ -1,6 +1,8 @@
 #ifndef HEADER_LUA
 #define HEADER_LUA
 
+static int iSize;
+
 class TLua
 {
 public:
@@ -11,7 +13,7 @@ private:
 
 };
 
-
 void SC_Set_Lua_Resolution();
+int GetTheSize();
 
 #endif
