@@ -105,7 +105,8 @@ void TBox::SetDrawable(bool bBool)
 void TBox::SetColor(const unsigned int m_iColor)
 {
 	iColor = m_iColor;
-	GfxSpriteSetColor(pSprite, m_iColor);
+	if (pSprite!=nullptr)
+		GfxSpriteSetColor(pSprite, m_iColor);
 }
 void TBox::SetTexte(char * pChar)
 {
