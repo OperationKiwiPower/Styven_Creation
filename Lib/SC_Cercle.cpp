@@ -6,11 +6,9 @@
 
 TCercle::TCercle(TGfxVec2 tPos, float Radius)
 {
-	tPosition = tPos;
-	m_ShpereCollid.tCenter = tPos;
-
 	fRadius = Radius;
-	m_ShpereCollid.m_fRadius = Radius;
+
+	SetPosition(tPos);
 
 	pSprite = GfxLineSpriteCreate();
 }
@@ -29,6 +27,7 @@ void TCercle::SetCollider()
 void TCercle::SetPosition(TGfxVec2 tPos)
 {
 	tPosition = tPos;
+	SetCollider();
 }
 
 void TCercle::AddForce(TGfxVec2 tVecDir)
@@ -38,6 +37,9 @@ void TCercle::AddForce(TGfxVec2 tVecDir)
 
 void TCercle::DrawCercle(int iNumberRay)
 {
+	GfxLineSpriteReset(pSprite);
+	GfxLineSpriteSetDrawingColor(pSprite, iColor);
+
 	int iRay = int(360 / iNumberRay);
 	TGfxVec2 tRay;
 	tRay = TGfxVec2(fRadius, 0.0f);

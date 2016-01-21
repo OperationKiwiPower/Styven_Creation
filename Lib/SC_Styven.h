@@ -9,7 +9,7 @@
 #include "SC_Transform.h"
 #include "SC_Lerp.h"
 
-#include "SC_Lua.h"
+//#include "SC_Lua.h"
 //#include "SC_Time.h"
 
 //Box --- BoxCollider --- Cercle --- CercleCollider --- Pantone
