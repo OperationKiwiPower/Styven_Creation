@@ -23,6 +23,7 @@ public:
 	TGfxVec2 tCenter;
 	float m_fRadius;
 	bool IsCollid(TBoxCollider m_bColid);
+	bool IsCollid(TGfxVec2 m_Point);
 	bool IsCollid(TSphereCollider m_bColid);
 	TGfxVec2 tAntiForce = TGfxVec2(0.0f,0.0f);
 private:

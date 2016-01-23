@@ -138,6 +138,15 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 	}
 
 }
+bool TSphereCollider::IsCollid(TGfxVec2 m_Point)
+{
+	TGfxVec2 tVec = m_Point - tCenter;
+	float fLenght = tVec.Length();
+	if (fLenght < m_fRadius)
+		return true;
+	else
+		return false;
+}
 /*
 bool SphereCollider::IsCollid(PointCollider m_bColid)
 {

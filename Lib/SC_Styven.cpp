@@ -1,6 +1,6 @@
 #include "flib.h"
 #include "flib_vec2.h"
-#include "lua.h"
+//#include "lua.h"
 #include "SC_Styven.h"
 
 #include "SC_Box.cpp"
@@ -10,7 +10,7 @@
 #include "SC_Transform.cpp"
 #include "SC_Lerp.cpp"
 
-#include "SC_Lua.cpp"
+//#include "SC_Lua.cpp"
 //#include "SC_Time.cpp"
 
 float SC_GetAngleVector(TGfxVec2  & Position, TGfxVec2 Direction)

@@ -22,6 +22,7 @@ public:
 	void SetPosition(TGfxVec2 tPos);
 	void SetCollider();
 	float fRadius;
+	unsigned int iColor = EGfxColor_White;
 
 private:
 	TGfxVec2 tPosition;
