@@ -12,6 +12,7 @@
 
 #include "SC_Lua.cpp"
 //#include "SC_Time.cpp"
+
 float SC_GetAngleVector(TGfxVec2  & Position, TGfxVec2 Direction)
 {
 	TGfxVec2 Vecteur(Direction - Position);
