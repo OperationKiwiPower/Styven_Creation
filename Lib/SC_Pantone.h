@@ -53,6 +53,7 @@ static const int g_iMaxColor = 19;
 
 #define EPantone_MI_Blanc		GfxColor( 255, 255, 255, 125 )
 #define EPantone_MI_Noir		GfxColor( 0, 0, 0, 125 )
+#define EPantone_Alpha			GfxColor( 0, 0, 0, 0 )
 
 static unsigned int g_iPantone[g_iMaxColor] = {
 	EPantone_Brun,

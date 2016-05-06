@@ -31,15 +31,17 @@ public:
 	void SetAngle(float fAngle);
 	void SetTexte(char * pChar);
 	void SetTexte(int iValeur);
+	void SetTile(const int g_iTextureSize, const int iTileX, const int iTileY);
 
 	void SetCenter(TGfxVec2 tPosition);
 	void SetRayS(float Width_Ray, float Height_Ray);
 	void SetCollider();
 	void SetDrawable(bool bBool);
 	void SetColor(const unsigned int m_iColor);
-	void SetBox(TGfxVec2 Position, float W_Ray, float H_Ray, float Angle);
+	void SetBox(TGfxVec2 Position, float W_Ray, float H_Ray, float Angle = 0);
 	void SetColliderAngle(float fAngle);
 	void SetTextColor(unsigned int iColor);
+	void SetScale(const float fScale);
 
 
 	//Render
@@ -53,10 +55,10 @@ public:
 
 private:
 
-	TGfxSprite * pLineSprite;	//OutLine
-	TGfxSprite * pSprite;		//Fill
-	TGfxSprite * pTextSprite;	//Number on squarre
-	TGfxSprite * pImgSprite;	//Image in squarre
+	TGfxSprite * pLineSprite = nullptr;	//OutLine
+	TGfxSprite * pSprite = nullptr;		//Fill
+	TGfxSprite * pTextSprite = nullptr;	//Number on squarre
+	TGfxSprite * pImgSprite = nullptr;	//Image in squarre
 
 	bool bIsDrawable = false;	//If you can render it
 	TBoxCollider m_Collider;
@@ -68,6 +70,7 @@ private:
 	float Ray_H;
 	float Ray_W;
 	float fAngle = 0;
+	float m_fScale = 1.0f;
 
 };
 

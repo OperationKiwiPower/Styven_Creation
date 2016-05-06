@@ -43,10 +43,16 @@ bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
 }
 bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 {
+	tSpot_LH += TGfxVec2(1.0f, 1.0f);
+	tSpot_RD -= TGfxVec2(1.0f, 1.0f);
+
 	TGfxVec2 tPosition = tSpot_LH + ((tSpot_RD - tSpot_LH) / 2.0f);
 	TGfxVec2 tVec = TGfxVec2(tPoint.x - tPosition.x, tPoint.y - tPosition.y);
 	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(fAngle));
 	TGfxVec2 tNormY = TGfxVec2(0, 1).Rotate(GfxMathDegToRad(fAngle));
+
+	tSpot_LH -= TGfxVec2(1.0f, 1.0f);
+	tSpot_RD += TGfxVec2(1.0f, 1.0f);
 
 	TGfxVec2 tDist = TGfxVec2(tVec.DotProduct(tNormX), tVec.DotProduct(tNormY));
 	TGfxVec2 tRay = tSpot_RD - tPosition;
