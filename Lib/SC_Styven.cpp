@@ -3,7 +3,7 @@
 //#include "lua.h"
 #include "SC_Styven.h"
 
-#include "SC_Box.cpp"
+#include "SC_Box.cpp" ///CODING CONVEN V
 #include "SC_Cercle.cpp"
 #include "SC_CollisionTest.cpp"
 #include "SC_Particule_System.cpp"

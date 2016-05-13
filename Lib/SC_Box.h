@@ -16,7 +16,7 @@ public:
 
 	//Create && draw
 	void CreateBox(unsigned int iColor, const bool bText, const bool bSprite, const bool bLine);
-	void CreateSpriteBox(TGfxTexture * pTexture, const unsigned int iColor, const int g_iTextureSize, int iTileX, int iTileY);
+	void CreateSpriteBox(TGfxTexture * pTexture, const int g_iTextureSize, int iTileX, int iTileY);
 	void DrawBox();
 
 	//Get
@@ -58,7 +58,7 @@ private:
 	TGfxSprite * m_pLineSprite = nullptr;	//OutLine
 	TGfxSprite * m_pSprite = nullptr;		//Fill
 	TGfxSprite * m_pTextSprite = nullptr;	//Number on squarre
-	TGfxSprite * m_pImgSprite = nullptr;	//Image in squarre
+//	TGfxSprite * m_pImgSprite = nullptr;	//Image in squarre
 
 	bool m_bIsDrawable = false;	//If you can render it
 	TBoxCollider m_Collider;
