@@ -1,32 +1,6 @@
 #ifndef HEADER_PANTONE
 #define HEADER_PANTONE
 
-//enum EPantone
-//{
-//	Pantone_Blanc = 1,
-//	Pantone_Rouge,
-//
-//	Pantone_Bleu,
-//	Pantone_Orange,
-//
-//	Pantone_Violet,
-//	Pantone_Mauve,
-//
-//	Pantone_Vert,
-//	Pantone_Jaune,
-//
-//	Pantone_Cyan,
-//	Pantone_Noir,
-//
-//	Pantone_Gris,
-//	Pantone_Rose,
-//
-//	Pantone_Indigo,
-//	Pantone_OR,
-//
-//	Pantone_Argent,
-//};
-
 static const int g_iMaxColor = 19;
 
 #define EPantone_Blanc			GfxColor( 255, 255, 255, 255 )

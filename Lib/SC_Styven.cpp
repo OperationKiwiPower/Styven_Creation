@@ -3,28 +3,22 @@
 //#include "lua.h"
 #include "SC_Styven.h"
 
-#include "SC_Box.cpp" ///CODING CONVEN V
-#include "SC_Cercle.cpp"
-#include "SC_CollisionTest.cpp"
-#include "SC_Particule_System.cpp"
-#include "SC_Transform.cpp"
-#include "SC_Lerp.cpp"
-#include "SC_Null.cpp"
+#include "SC_Box.cpp"	///CODING CONVEN V
+#include "SC_Cercle.cpp"	///CODING CONVEN V
+#include "SC_CollisionTest.cpp"	///CODING CONVEN V
+#include "SC_Particule_System.cpp"	///CODING CONVEN V
+#include "SC_Lerp.cpp"	///CODING CONVEN V
 
-//#include "TUIButton.cpp"
-//#include "TUIInterface.cpp"
-//#include "TUIWidget.cpp"
+int g_iDebugTime = 0;
+int g_iFirstTime = 0;
+int g_iNowTime = 0;
 
-//#include "SC_Lua.cpp"
-//#include "SC_Time.cpp"
-
-
-void CalculateDebugTime(const char * pChar)
+void CalculateDebugTime(const char * pText)
 {
 	g_iNowTime = GfxTimeGetMilliseconds();
 	g_iDebugTime = (g_iNowTime - g_iFirstTime);
 
-	GfxDbgPrintf("%s take %i milisecond\n", pChar, int(g_iDebugTime));
+	GfxDbgPrintf("%s take %i milisecond\n", pText, int(g_iDebugTime));
 	g_iFirstTime = GfxTimeGetMilliseconds();
 
 }

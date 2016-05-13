@@ -1,27 +1,23 @@
-#ifndef HEADER_PARTICULE_SYSTEM
-#define HEADER_PARTICULE_SYSTEM
-
+#pragma once
 class TParticule_System
 {
 public:
-	TGfxSprite * pSprite;
+	TGfxSprite * m_pSprite;
 
-	void CreateSystem(const char * pName, const int iTileXMax, const int iTileYMax);
+	void CreateSystem(const char * pFileName, const int iTileXMax, const int iTileYMax);
 	void SetSystem(TGfxVec2 tPosition, const float fAngle);
 	void RenderSystem();
 	void AnimeParticule(const int iTiming);
 
 private:
-	TGfxVec2 tPos;
+	TGfxVec2 m_tPos;
 
-	float fSize;
+	float m_fSize;
 
-	int iTileX;
-	int iTileY;
+	int m_iTileX;
+	int m_iTileY;
 
-	int iMaxTileX = 4;
-	int iMaxTileY = 4;
-	int iCount = 0;
+	int m_iMaxTileX = 4;
+	int m_iMaxTileY = 4;
+	int m_iCount = 0;
 };
-
-#endif //HEADER_PARTICULE_SYSTEM
