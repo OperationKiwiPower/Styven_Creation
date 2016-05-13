@@ -1,13 +1,12 @@
 #include "flib.h"
 #include "flib_vec2.h"
-//#include "lua.h"
 #include "SC_Styven.h"
 
-#include "SC_Box.cpp"	///CODING CONVEN V
-#include "SC_Cercle.cpp"	///CODING CONVEN V
-#include "SC_CollisionTest.cpp"	///CODING CONVEN V
-#include "SC_Particule_System.cpp"	///CODING CONVEN V
-#include "SC_Lerp.cpp"	///CODING CONVEN V
+#include "SC_Box.cpp"
+#include "SC_Cercle.cpp"
+#include "SC_CollisionTest.cpp"
+#include "SC_Particule_System.cpp"
+#include "SC_Lerp.cpp"
 
 int g_iDebugTime = 0;
 int g_iFirstTime = 0;
