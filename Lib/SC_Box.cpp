@@ -5,10 +5,13 @@
 #include "SC_CollisionTest.h"
 #include "SC_Box.h"
 
-//Construct && Destruct
-TBox::TBox(const unsigned int iColor)
-{
 
+TBox::~TBox()
+{
+	m_pLineSprite = nullptr;
+	m_pSprite = nullptr;	
+	m_pTextSprite = nullptr;
+	m_pImgSprite = nullptr;
 }
 //Public 
 

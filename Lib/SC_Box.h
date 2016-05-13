@@ -12,7 +12,7 @@ class TBox
 public:
 
 	TBox() = default;
-	TBox(unsigned int iColor);
+	~TBox();
 
 	//Create && draw
 	void CreateBox(unsigned int iColor, const bool bText, const bool bSprite, const bool bLine);
@@ -50,26 +50,26 @@ public:
 	void Render_O_Img();
 	void Render_O_Text();
 
-	char * pText;
-	int iText = -1;
+	char * m_pText;
+	int m_iText = -1;
 
 private:
 
-	TGfxSprite * pLineSprite = nullptr;	//OutLine
-	TGfxSprite * pSprite = nullptr;		//Fill
-	TGfxSprite * pTextSprite = nullptr;	//Number on squarre
-	TGfxSprite * pImgSprite = nullptr;	//Image in squarre
+	TGfxSprite * m_pLineSprite = nullptr;	//OutLine
+	TGfxSprite * m_pSprite = nullptr;		//Fill
+	TGfxSprite * m_pTextSprite = nullptr;	//Number on squarre
+	TGfxSprite * m_pImgSprite = nullptr;	//Image in squarre
 
-	bool bIsDrawable = false;	//If you can render it
+	bool m_bIsDrawable = false;	//If you can render it
 	TBoxCollider m_Collider;
 
-	unsigned int iColor;
+	unsigned int m_iColor;
 
-	TGfxVec2 tCenter;
+	TGfxVec2 m_tCenter;
 	
-	float Ray_H;
-	float Ray_W;
-	float fAngle = 0;
+	float m_fRay_H = 0.0f;
+	float m_fRay_W = 0.0f;
+	float m_fAngle = 0.0f;
 	float m_fScale = 1.0f;
 
 };
