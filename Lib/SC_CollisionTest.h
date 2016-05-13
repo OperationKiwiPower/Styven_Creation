@@ -8,25 +8,25 @@
 class TBoxCollider
 {
 public:
-	TGfxSprite * pDessin;
-	TGfxVec2 tSpot_LH;
-	TGfxVec2 tSpot_RD;
-	float fAngle = 0;
-
+	TGfxVec2 m_tSpot_LH;
+	TGfxVec2 m_tSpot_RD;
+	
+	float m_fAngle = 0;
+	
 	bool IsCollid(TBoxCollider m_bColid);
 	bool IsCollid(TGfxVec2 tPoint);
 
 };
-class TSphereCollider
+class TCercleCollider
 {
 public:
-	TGfxVec2 tCenter;
+	TGfxVec2 m_tCenter;
 	float m_fRadius;
+
 	bool IsCollid(TBoxCollider m_bColid);
 	bool IsCollid(TGfxVec2 m_Point);
-	bool IsCollid(TSphereCollider m_bColid);
-	TGfxVec2 tAntiForce = TGfxVec2(0.0f,0.0f);
+	bool IsCollid(TCercleCollider m_bColid);
 private:
-
+	TGfxVec2 tAntiForce = TGfxVec2(0.0f,0.0f);
 };
 #endif

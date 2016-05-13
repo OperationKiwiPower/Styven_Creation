@@ -4,53 +4,47 @@
 
 #include <math.h>
 
-TCercle::TCercle(TGfxVec2 tPos, float Radius)
+TCercle::TCercle(TGfxVec2 tPos, float fRadius)
 {
-	fRadius = Radius;
+	m_fRadius = fRadius;
 
 	SetPosition(tPos);
 
-	pSprite = GfxLineSpriteCreate();
+	m_pSprite = GfxLineSpriteCreate();
 }
-
-TGfxVec2 TCercle::GetPosition()
-{
-	return tPosition;
-}
-
 
 void TCercle::SetCollider()
 {
-	m_ShpereCollid.tCenter = tPosition;
-	m_ShpereCollid.m_fRadius = fRadius;
+	m_tCollid.m_tCenter = m_tPosition;
+	m_tCollid.m_fRadius = m_fRadius;
 }
 void TCercle::SetPosition(TGfxVec2 tPos)
 {
-	tPosition = tPos;
+	m_tPosition = tPos;
 	SetCollider();
 }
 
 void TCercle::AddForce(TGfxVec2 tVecDir)
 {
-	tPosition += tVecDir;
+	m_tPosition += tVecDir;
 }
 
 void TCercle::DrawCercle(int iNumberRay)
 {
-	GfxLineSpriteReset(pSprite);
-	GfxLineSpriteSetDrawingColor(pSprite, iColor);
+	GfxLineSpriteReset(m_pSprite);
+	GfxLineSpriteSetDrawingColor(m_pSprite, m_iColor);
 
 	int iRay = int(360 / iNumberRay);
 	TGfxVec2 tRay;
-	tRay = TGfxVec2(fRadius, 0.0f);
+	tRay = TGfxVec2(m_fRadius, 0.0f);
 
-	GfxLineSpriteJumpTo(pSprite, tPosition.x + tRay.x, tPosition.y + tRay.y);
+	GfxLineSpriteJumpTo(m_pSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
 
 	for (int i = 0; i < iNumberRay+1; i++)
 	{
 		float fAngle = float(i * iRay);
 		tRay = TGfxVec2(cos(GfxMathDegToRad(fAngle)), sin(GfxMathDegToRad(fAngle)));
-		tRay *= fRadius;
-		GfxLineSpriteLineTo(pSprite, tPosition.x + tRay.x, tPosition.y + tRay.y);
+		tRay *= m_fRadius;
+		GfxLineSpriteLineTo(m_pSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
 	}
 }

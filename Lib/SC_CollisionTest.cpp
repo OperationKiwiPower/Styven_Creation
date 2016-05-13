@@ -1,41 +1,39 @@
 #include"flib.h"
 #include"flib_vec2.h"
 #include"SC_CollisionTest.h"
-//#include<math.h>
-
 
 bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
 {
 	//LH
-	if (m_bColid.tSpot_LH.x >= tSpot_LH.x &&
-		m_bColid.tSpot_LH.x <= tSpot_RD.x &&
-		m_bColid.tSpot_LH.y >= tSpot_LH.y &&
-		m_bColid.tSpot_LH.y <= tSpot_RD.y)
+	if (m_bColid.m_tSpot_LH.x >= m_tSpot_LH.x &&
+		m_bColid.m_tSpot_LH.x <= m_tSpot_RD.x &&
+		m_bColid.m_tSpot_LH.y >= m_tSpot_LH.y &&
+		m_bColid.m_tSpot_LH.y <= m_tSpot_RD.y)
 	{
 		return true;
 	}
 	//LD
-	if (m_bColid.tSpot_LH.x >= tSpot_LH.x &&
-		m_bColid.tSpot_LH.x <= tSpot_RD.x &&
-		m_bColid.tSpot_RD.y >= tSpot_LH.y &&
-		m_bColid.tSpot_RD.y <= tSpot_RD.y)
+	if (m_bColid.m_tSpot_LH.x >= m_tSpot_LH.x &&
+		m_bColid.m_tSpot_LH.x <= m_tSpot_RD.x &&
+		m_bColid.m_tSpot_RD.y >= m_tSpot_LH.y &&
+		m_bColid.m_tSpot_RD.y <= m_tSpot_RD.y)
 	{
 		return true;
 	}
 
 	//RH
-	if (m_bColid.tSpot_RD.x >= tSpot_LH.x &&
-		m_bColid.tSpot_RD.x <= tSpot_RD.x &&
-		m_bColid.tSpot_LH.y >= tSpot_LH.y &&
-		m_bColid.tSpot_LH.y <= tSpot_RD.y)
+	if (m_bColid.m_tSpot_RD.x >= m_tSpot_LH.x &&
+		m_bColid.m_tSpot_RD.x <= m_tSpot_RD.x &&
+		m_bColid.m_tSpot_LH.y >= m_tSpot_LH.y &&
+		m_bColid.m_tSpot_LH.y <= m_tSpot_RD.y)
 	{
 		return true;
 	}
 	//RD
-	if (m_bColid.tSpot_RD.x >= tSpot_LH.x &&
-		m_bColid.tSpot_RD.x <= tSpot_RD.x &&
-		m_bColid.tSpot_RD.y >= tSpot_LH.y &&
-		m_bColid.tSpot_RD.y <= tSpot_RD.y)
+	if (m_bColid.m_tSpot_RD.x >= m_tSpot_LH.x &&
+		m_bColid.m_tSpot_RD.x <= m_tSpot_RD.x &&
+		m_bColid.m_tSpot_RD.y >= m_tSpot_LH.y &&
+		m_bColid.m_tSpot_RD.y <= m_tSpot_RD.y)
 	{
 		return true;
 	}
@@ -43,19 +41,19 @@ bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
 }
 bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 {
-	tSpot_LH += TGfxVec2(1.0f, 1.0f);
-	tSpot_RD -= TGfxVec2(1.0f, 1.0f);
+	m_tSpot_LH += TGfxVec2(1.0f, 1.0f);
+	m_tSpot_RD -= TGfxVec2(1.0f, 1.0f);
 
-	TGfxVec2 tPosition = tSpot_LH + ((tSpot_RD - tSpot_LH) / 2.0f);
+	TGfxVec2 tPosition = m_tSpot_LH + ((m_tSpot_RD - m_tSpot_LH) / 2.0f);
 	TGfxVec2 tVec = TGfxVec2(tPoint.x - tPosition.x, tPoint.y - tPosition.y);
-	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(fAngle));
-	TGfxVec2 tNormY = TGfxVec2(0, 1).Rotate(GfxMathDegToRad(fAngle));
+	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(m_fAngle));
+	TGfxVec2 tNormY = TGfxVec2(0, 1).Rotate(GfxMathDegToRad(m_fAngle));
 
-	tSpot_LH -= TGfxVec2(1.0f, 1.0f);
-	tSpot_RD += TGfxVec2(1.0f, 1.0f);
+	m_tSpot_LH -= TGfxVec2(1.0f, 1.0f);
+	m_tSpot_RD += TGfxVec2(1.0f, 1.0f);
 
 	TGfxVec2 tDist = TGfxVec2(tVec.DotProduct(tNormX), tVec.DotProduct(tNormY));
-	TGfxVec2 tRay = tSpot_RD - tPosition;
+	TGfxVec2 tRay = m_tSpot_RD - tPosition;
 
 	if (fabs(tDist.x) <= fabs(tRay.x) && fabs(tDist.y) <= fabs(tRay.y))
 	{
@@ -67,17 +65,15 @@ bool TBoxCollider::IsCollid(TGfxVec2 tPoint)
 	}
 }
 
-bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
+bool TCercleCollider::IsCollid(TBoxCollider m_bColid)
 {
-	GfxLineSpriteReset(m_bColid.pDessin);
-
-	TGfxVec2 tPosition = m_bColid.tSpot_LH + ((m_bColid.tSpot_RD - m_bColid.tSpot_LH) / 2.0f);
-	TGfxVec2 tVec = TGfxVec2(tCenter.x - tPosition.x, tCenter.y - tPosition.y);
-	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(m_bColid.fAngle));
-	TGfxVec2 tNormY = TGfxVec2(0, 1).Rotate(GfxMathDegToRad(m_bColid.fAngle));
+	TGfxVec2 tPosition = m_bColid.m_tSpot_LH + ((m_bColid.m_tSpot_RD - m_bColid.m_tSpot_LH) / 2.0f);
+	TGfxVec2 tVec = TGfxVec2(m_tCenter.x - tPosition.x, m_tCenter.y - tPosition.y);
+	TGfxVec2 tNormX = TGfxVec2(1, 0).Rotate(GfxMathDegToRad(m_bColid.m_fAngle));
+	TGfxVec2 tNormY = TGfxVec2(0, 1).Rotate(GfxMathDegToRad(m_bColid.m_fAngle));
 
 	TGfxVec2 tDist = TGfxVec2(tVec.DotProduct(tNormX), tVec.DotProduct(tNormY));
-	TGfxVec2 tRay = m_bColid.tSpot_RD - tPosition;
+	TGfxVec2 tRay = m_bColid.m_tSpot_RD - tPosition;
 
 	//cercle
 	TGfxVec2 tCloseXCercle;
@@ -85,30 +81,14 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 
 	if (tDist.x != 0.0f)
 	{
-		GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Rouge);
-		GfxLineSpriteJumpTo(m_bColid.pDessin, tCenter.x, tCenter.y);
 		tCloseXCercle = TGfxVec2(tNormX*tDist.x).Normalize()*m_fRadius;
-		GfxLineSpriteLineTo(m_bColid.pDessin, tCenter.x - tCloseXCercle.x, tCenter.y - tCloseXCercle.y);
 	}
 
 	if (tDist.y != 0.0f)
 	{
-		GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Vert);
-		GfxLineSpriteJumpTo(m_bColid.pDessin, tCenter.x, tCenter.y);
 		tCloseYCercle = TGfxVec2(tNormY*tDist.y).Normalize()*m_fRadius;
-		GfxLineSpriteLineTo(m_bColid.pDessin, tCenter.x - tCloseYCercle.x, tCenter.y - tCloseYCercle.y);
 	}
-	//box
-	GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Rouge);
-	GfxLineSpriteJumpTo(m_bColid.pDessin, tPosition.x, tPosition.y);
-	TGfxVec2 tCloseX = TGfxVec2(tNormX*tDist.x);
-	GfxLineSpriteLineTo(m_bColid.pDessin, tPosition.x + tCloseX.x, tPosition.y + tCloseX.y);
-	GfxLineSpriteSetDrawingColor(m_bColid.pDessin, EPantone_Vert);
-	GfxLineSpriteJumpTo(m_bColid.pDessin, tPosition.x, tPosition.y);
-	TGfxVec2 tCloseY = TGfxVec2(tNormY*tDist.y);
-	GfxLineSpriteLineTo(m_bColid.pDessin, tPosition.x + tCloseY.x, tPosition.y + tCloseY.y);
-
-
+	
 	if (fabs(tDist.x) <= fabs(tRay.x) && fabs(tDist.y) <= fabs(tRay.y))
 	{
 		tAntiForce = TGfxVec2(0.0f, 0.0f);
@@ -144,23 +124,12 @@ bool TSphereCollider::IsCollid(TBoxCollider m_bColid)
 	}
 
 }
-bool TSphereCollider::IsCollid(TGfxVec2 m_Point)
+bool TCercleCollider::IsCollid(TGfxVec2 m_Point)
 {
-	TGfxVec2 tVec = m_Point - tCenter;
+	TGfxVec2 tVec = m_Point - m_tCenter;
 	float fLenght = tVec.Length();
 	if (fLenght < m_fRadius)
 		return true;
 	else
 		return false;
 }
-/*
-bool SphereCollider::IsCollid(PointCollider m_bColid)
-{
-return true;
-
-}
-bool SphereCollider::IsCollid(SphereCollider m_bColid)
-{
-return true;
-}
-*/

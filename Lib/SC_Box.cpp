@@ -62,7 +62,6 @@ void TBox::CreateBox(unsigned int m_iColor, const bool bText, const bool bSprite
 		GfxSpriteSetPivot(m_pSprite, 0.5f, 0.5f);
 		SetColor(m_iColor);
 	}
-	m_Collider.pDessin = GfxLineSpriteCreate();
 }
 void TBox::CreateSpriteBox(TGfxTexture * pTexture, const int g_iTextureSize, int iTileX, int iTileY)
 {
@@ -213,12 +212,12 @@ void TBox::SetCutOut(const int iIndex)
 //----BoxCollider
 void TBox::SetColliderAngle(float fAngle)
 {
-	m_Collider.fAngle = fAngle;
+	m_Collider.m_fAngle = fAngle;
 }
 void TBox::SetCollider()
 {
 	TGfxVec2 tRay(m_fRay_W / 2.0f, m_fRay_H / 2.0f);
-	m_Collider.tSpot_LH = TGfxVec2(m_tCenter - tRay);
-	m_Collider.tSpot_RD = TGfxVec2(m_tCenter + tRay);
+	m_Collider.m_tSpot_LH = TGfxVec2(m_tCenter - tRay);
+	m_Collider.m_tSpot_RD = TGfxVec2(m_tCenter + tRay);
 }
 
