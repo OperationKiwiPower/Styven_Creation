@@ -42,7 +42,7 @@ public:
 	void SetColliderAngle(float fAngle);
 	void SetTextColor(unsigned int iColor);
 	void SetScale(const float fScale);
-
+	void SetCutOut(const int iIndex);
 
 	//Render
 	void RenderBox();

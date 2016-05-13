@@ -90,9 +90,9 @@ void TBox::CreateSpriteBox(TGfxTexture * pTexture,const unsigned int iColor, con
 
 	pImgSprite = GfxSpriteCreate(pTexture);
 	GfxSpriteSetFilteringEnabled(pImgSprite, false);
-	//GfxSpriteSetFilteringEnabled(pImgSprite, false);
 	GfxSpriteSetCutout(pImgSprite, iTileX*g_iTextureSize, iTileY*g_iTextureSize, g_iTextureSize, g_iTextureSize);
 	GfxSpriteSetPivot(pImgSprite, g_iTextureSize / 2.0f, g_iTextureSize / 2.0f);
+	SetBox(TGfxVec2(0, 0), g_iTextureSize, g_iTextureSize);
 
 	//m_Collider.pDessin = GfxLineSpriteCreate();
 }
@@ -152,14 +152,14 @@ void TBox::DrawBox()
 	{
 		GfxSpriteSetPosition(pSprite, tCenter.x, tCenter.y);
 		GfxSpriteSetAngle(pSprite, GfxMathDegToRad(-fAngle));
-		GfxSpriteSetScale(pSprite, Ray_W*2.0f*m_fScale, Ray_H*2.0f*m_fScale);
+		//GfxSpriteSetScale(pSprite, Ray_W*2.0f*m_fScale, Ray_H*2.0f*m_fScale);
 	}
 	if (pImgSprite != nullptr)
 	{
 		GfxSpriteSetPosition(pImgSprite, tCenter.x, tCenter.y);
 		GfxSpriteSetAngle(pImgSprite, GfxMathDegToRad(-fAngle));
 		float fTextureSize = float(GfxSpriteGetTextureSizeX(pImgSprite) / 8);
-		GfxSpriteSetScale(pImgSprite, Ray_W / fTextureSize, Ray_W / fTextureSize);
+		//GfxSpriteSetScale(pImgSprite, Ray_W / fTextureSize, Ray_W / fTextureSize);
 	}
 	//Line
 	if (pLineSprite != nullptr)
@@ -221,6 +221,7 @@ void TBox::SetRayS(float Width_Ray, float Height_Ray)
 void TBox::SetCenter(TGfxVec2 tPosition)
 {
 	tCenter = tPosition;
+	SetCollider();
 }
 void TBox::SetTextColor(unsigned int iColor)
 {
@@ -231,7 +232,16 @@ void TBox::SetScale(const float fScale)
 	m_fScale = fScale;
 	GfxSpriteSetScale(pSprite, m_fScale, m_fScale);
 }
+void TBox::SetCutOut(const int iIndex)
+{
+	int iNumberWidth = (GfxSpriteGetTextureSizeX(pImgSprite) / Ray_W);
+	int iNumberHeight = (GfxSpriteGetTextureSizeY(pImgSprite) / Ray_H);
 
+	int iTileX = iIndex % iNumberWidth;
+	int iTileY = iIndex / iNumberHeight;
+
+	GfxSpriteSetCutout(pImgSprite, iTileX * Ray_W, iTileY * Ray_H, Ray_W, Ray_H);
+}
 
 //----BoxCollider
 void TBox::SetColliderAngle(float fAngle)
@@ -240,7 +250,7 @@ void TBox::SetColliderAngle(float fAngle)
 }
 void TBox::SetCollider()
 {
-	TGfxVec2 tRay(Ray_W, Ray_H);
+	TGfxVec2 tRay(Ray_W / 2.0f, Ray_H / 2.0f);
 	m_Collider.tSpot_LH = TGfxVec2(tCenter - tRay);
 	m_Collider.tSpot_RD = TGfxVec2(tCenter + tRay);
 }
