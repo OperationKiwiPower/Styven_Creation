@@ -42,7 +42,7 @@ public:
 	void SetColliderAngle(float fAngle);
 	void SetTextColor(unsigned int iColor);
 	void SetScale(const float fScale);
-
+	void SetCutOut(const int iIndex);
 
 	//Render
 	void RenderBox();
@@ -67,9 +67,9 @@ private:
 
 	TGfxVec2 tCenter;
 	
-	float Ray_H;
-	float Ray_W;
-	float fAngle = 0;
+	float Ray_H = 0.0f;
+	float Ray_W = 0.0f;
+	float fAngle = 0.0f;
 	float m_fScale = 1.0f;
 
 };
