@@ -20,6 +20,10 @@ TGfxVec2 TBox::GetCenter()const
 {
 	return m_tCenter;
 }
+TGfxVec2 TBox::GetCenterOrigine()const
+{
+	return m_tCenterOrigine;
+}
 TBoxCollider TBox::GetCollider()const
 {
 	return m_Collider;
@@ -188,6 +192,10 @@ void TBox::SetCenter(TGfxVec2 tPosition)
 {
 	m_tCenter = tPosition;
 	SetCollider();
+}
+void TBox::SetCenterOrigine(TGfxVec2 tPosition)
+{
+	m_tCenterOrigine = tPosition;
 }
 void TBox::SetTextColor(unsigned int iColor)
 {

@@ -5,7 +5,11 @@
 TGfxVec2 TLerp::Vector2(TGfxVec2 tOrigine, const TGfxVec2 tDestination, const float fValue)// 0 <-> 1
 {
 	TGfxVec2 tVec = tDestination - tOrigine;
-	tOrigine += tVec*fValue;
+	if (tVec.Length() < 1.0f)
+		tOrigine = tDestination;
+	else
+		tOrigine += tVec*fValue;
+
 	return tOrigine;
 }
 float TLerp::Float(float fOrigine, float fDestination, float fTime)

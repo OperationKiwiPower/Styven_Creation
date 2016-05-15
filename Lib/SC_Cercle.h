@@ -9,11 +9,8 @@ class TCercle
 {
 public:
 
-	TGfxSprite * m_pSprite;
-	TCercleCollider m_tCollid;
-
 	TCercle() = default;
-	TCercle(TGfxVec2 tPos,float fRadius);
+	TCercle(TGfxVec2 tPos,float fRadius,bool bIsFiled = false);
 
 	TGfxVec2 GetPosition(){ return m_tPosition; };
 	TCercleCollider GetCollider(){ return m_tCollid; };
@@ -24,11 +21,17 @@ public:
 	void SetPosition(TGfxVec2 tPos);
 	void SetCollider();
 
+	void Render();
 
 private:
 	TGfxVec2 m_tPosition;
 	float m_fRadius;
 	unsigned int m_iColor = EGfxColor_White;
+
+	bool m_bIsFiled = false;
+	TGfxSprite * m_pSprite = nullptr;
+	TGfxSprite * m_pLineSprite = nullptr;
+	TCercleCollider m_tCollid;
 
 };
 

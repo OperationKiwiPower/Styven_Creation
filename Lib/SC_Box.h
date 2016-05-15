@@ -21,6 +21,7 @@ public:
 
 	//Get
 	TGfxVec2 GetCenter() const;
+	TGfxVec2 GetCenterOrigine() const;
 	TBoxCollider GetCollider() const;
 
 	unsigned int GetColor()const;
@@ -34,6 +35,7 @@ public:
 	void SetTile(const int g_iTextureSize, const int iTileX, const int iTileY);
 
 	void SetCenter(TGfxVec2 tPosition);
+	void SetCenterOrigine(TGfxVec2 tPosition);
 	void SetRayS(float Width_Ray, float Height_Ray);
 	void SetCollider();
 	void SetDrawable(bool bBool);
@@ -58,7 +60,6 @@ private:
 	TGfxSprite * m_pLineSprite = nullptr;	//OutLine
 	TGfxSprite * m_pSprite = nullptr;		//Fill
 	TGfxSprite * m_pTextSprite = nullptr;	//Number on squarre
-//	TGfxSprite * m_pImgSprite = nullptr;	//Image in squarre
 
 	bool m_bIsDrawable = false;	//If you can render it
 	TBoxCollider m_Collider;
@@ -66,6 +67,7 @@ private:
 	unsigned int m_iColor;
 
 	TGfxVec2 m_tCenter;
+	TGfxVec2 m_tCenterOrigine;
 	
 	float m_fRay_H = 0.0f;
 	float m_fRay_W = 0.0f;
