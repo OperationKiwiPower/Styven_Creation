@@ -16,7 +16,9 @@ public:
 
 	//Create && draw
 	void CreateBox(unsigned int iColor, const bool bText, const bool bSprite, const bool bLine);
-	void CreateSpriteBox(TGfxTexture * pTexture, const int g_iTextureSize, int iTileX, int iTileY);
+	void CreateSpriteBox(TGfxTexture * pTexture, const int iTextureSize, int iTileX, int iTileY);
+	void CreateSpriteBox(TGfxTexture * pTexture);
+	void CreateTextBox(const char * pName);
 	void DrawBox();
 
 	//Get

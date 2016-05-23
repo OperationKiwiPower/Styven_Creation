@@ -4,11 +4,13 @@
 
 #include <math.h>
 
+TGfxImage * g_pImage = nullptr;
+
 TGfxSprite * CreateCercleFiled(const int iRay)
 {
 	const int iDiam = iRay * 2;
-	TGfxImage * pImage = GfxImageCreate(iDiam, iDiam);
-	unsigned int * pData = GfxImageGetData(pImage);
+	g_pImage = GfxImageCreate(iDiam, iDiam);
+	unsigned int * pData = GfxImageGetData(g_pImage);
 	for (int y = 0; y < iDiam; y++)
 	{
 		for (int x = 0; x < iDiam; x++)
@@ -21,7 +23,7 @@ TGfxSprite * CreateCercleFiled(const int iRay)
 				pData[iIndex] = EPantone_Alpha;
 		}
 	}
-	TGfxSprite * pSprite = GfxSpriteCreate(GfxTextureCreate(pImage));
+	TGfxSprite * pSprite = GfxSpriteCreate(GfxTextureCreate(g_pImage));
 	GfxSpriteSetPivot(pSprite, float(iRay), float(iRay));
 	return pSprite;
 }
@@ -35,7 +37,16 @@ TCercle::TCercle(TGfxVec2 tPos, float fRadius, bool bIsFiled)
 	if (m_bIsFiled)
 		m_pSprite = CreateCercleFiled(int(fRadius));
 
-	m_pLineSprite = GfxLineSpriteCreate();
+	if (m_pLineSprite == nullptr)
+		m_pLineSprite = GfxLineSpriteCreate();
+}
+TCercle::~TCercle()
+{
+	if(m_pSprite != nullptr)
+		GfxSpriteDestroy(m_pSprite);
+
+	if (m_pLineSprite != nullptr)
+		GfxSpriteDestroy(m_pLineSprite);
 }
 
 void TCercle::SetCollider()
@@ -62,21 +73,26 @@ void TCercle::AddForce(TGfxVec2 tVecDir)
 
 void TCercle::DrawCercle(int iNumberRay)
 {
-	GfxLineSpriteReset(m_pLineSprite);
-	GfxLineSpriteSetDrawingColor(m_pLineSprite, m_iColor);
+	if (!m_bIsFiled)
+	{
+		GfxLineSpriteReset(m_pLineSprite);
+		GfxLineSpriteSetDrawingColor(m_pLineSprite, m_iColor);
+	}
 	GfxSpriteSetPosition(m_pSprite, m_tPosition.x, m_tPosition.y);
 
 	int iRay = int(360 / iNumberRay);
 	TGfxVec2 tRay;
 	tRay = TGfxVec2(m_fRadius, 0.0f);
-
-	GfxLineSpriteJumpTo(m_pLineSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
-
-	for (int i = 0; i < iNumberRay+1; i++)
+	if (!m_bIsFiled)
 	{
-		float fAngle = float(i * iRay);
-		tRay = TGfxVec2(cos(GfxMathDegToRad(fAngle)), sin(GfxMathDegToRad(fAngle)));
-		tRay *= m_fRadius;
-		GfxLineSpriteLineTo(m_pLineSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
+		GfxLineSpriteJumpTo(m_pLineSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
+
+		for (int i = 0; i < iNumberRay + 1; i++)
+		{
+			float fAngle = float(i * iRay);
+			tRay = TGfxVec2(cos(GfxMathDegToRad(fAngle)), sin(GfxMathDegToRad(fAngle)));
+			tRay *= m_fRadius;
+			GfxLineSpriteLineTo(m_pLineSprite, m_tPosition.x + tRay.x, m_tPosition.y + tRay.y);
+		}
 	}
 }

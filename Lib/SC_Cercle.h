@@ -11,6 +11,7 @@ public:
 
 	TCercle() = default;
 	TCercle(TGfxVec2 tPos,float fRadius,bool bIsFiled = false);
+	~TCercle();
 
 	TGfxVec2 GetPosition(){ return m_tPosition; };
 	TCercleCollider GetCollider(){ return m_tCollid; };
