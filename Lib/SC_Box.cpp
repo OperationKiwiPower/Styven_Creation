@@ -8,9 +8,12 @@
 
 TBox::~TBox()
 {
-	m_pLineSprite = nullptr;
-	m_pSprite = nullptr;	
-	m_pTextSprite = nullptr;
+	if (m_pLineSprite != nullptr)
+		GfxSpriteDestroy(m_pLineSprite);	m_pLineSprite = nullptr;
+	if (m_pSprite != nullptr)
+		GfxSpriteDestroy(m_pSprite);	m_pSprite = nullptr;
+	if (m_pTextSprite != nullptr)
+		GfxSpriteDestroy(m_pTextSprite);	m_pTextSprite = nullptr;
 	//m_pImgSprite = nullptr;
 }
 //Public 
@@ -89,12 +92,12 @@ void TBox::CreateSpriteBox(TGfxTexture * pTexture)
 void TBox::CreateTextBox(const char * pName)
 {
 	m_bIsDrawable = true;
-	m_pSprite = GfxTextSpriteCreate();
-	GfxSpriteSetFilteringEnabled(m_pSprite, false);
-	GfxTextSpritePrintf(m_pSprite, pName);
-	int iSizeX = GfxSpriteGetSizeX(m_pSprite);
-	int iSizeY = GfxSpriteGetSizeY(m_pSprite);
-	GfxSpriteSetPivot(m_pSprite, iSizeX / 2.0f, iSizeY / 2.0f);
+	m_pTextSprite = GfxTextSpriteCreate();
+	GfxSpriteSetFilteringEnabled(m_pTextSprite, false);
+	GfxTextSpritePrintf(m_pTextSprite, pName);
+	int iSizeX = GfxSpriteGetSizeX(m_pTextSprite);
+	int iSizeY = GfxSpriteGetSizeY(m_pTextSprite);
+	GfxSpriteSetPivot(m_pTextSprite, iSizeX / 2.0f, iSizeY / 2.0f);
 	SetBox(TGfxVec2(0.0f, 0.0f), (float)iSizeX, (float)iSizeY);
 }
 
@@ -177,6 +180,7 @@ void TBox::DrawBox()
 	}
 	if (m_pTextSprite != nullptr)
 	{
+		GfxSpriteSetPosition(m_pTextSprite, m_tCenter.x, m_tCenter.y);
 		GfxSpriteSetAngle(m_pTextSprite,GfxMathDegToRad(-m_fAngle));
 	}
 }
@@ -196,7 +200,8 @@ void TBox::Render_O_Img()
 }
 void TBox::Render_O_Text()
 {
-	if (m_bIsDrawable && m_pTextSprite!=nullptr)GfxSpriteRender(m_pTextSprite);
+	if (m_bIsDrawable && m_pTextSprite!=nullptr)
+		GfxSpriteRender(m_pTextSprite);
 }
 
 //----Box
