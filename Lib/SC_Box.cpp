@@ -233,6 +233,11 @@ void TBox::SetScale(const float fScale)
 	m_fScale = fScale;
 	GfxSpriteSetScale(m_pSprite, m_fScale, m_fScale);
 }
+void TBox::SetScale(const float fScaleX,const float fScaleY)
+{
+	m_fScale = fScaleY;
+	GfxSpriteSetScale(m_pSprite, fScaleX, fScaleY);
+}
 void TBox::SetCutOut(const int iIndex)
 {
 	int iNumberWidth = (GfxSpriteGetTextureSizeX(m_pSprite) / int(m_fRay_W));

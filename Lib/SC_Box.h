@@ -46,8 +46,8 @@ public:
 	void SetColliderAngle(float fAngle);
 	void SetTextColor(unsigned int iColor);
 	void SetScale(const float fScale);
+	void SetScale(const float fScaleX, const float fScaleY);
 	void SetCutOut(const int iIndex);
-
 	//Render
 	void RenderBox();
 	void Render_O_Line();
