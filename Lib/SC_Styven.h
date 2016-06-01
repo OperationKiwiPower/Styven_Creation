@@ -10,7 +10,16 @@
 
 //Box --- BoxCollider --- Cercle --- CercleCollider --- Pantone --- Particul_System --- Lerp
 
+enum EDirection
+{
+	EDirection_Up,
+	EDirection_Down,
+	EDirection_Left,
+	EDirection_Right,
+};
+
 void CalculateDebugTime(const char * pText);
 float SC_GetAngleVector(TGfxVec2  & Position, TGfxVec2 Direction);
+EDirection SC_GetDirectionVector(TGfxVec2  & Position, TGfxVec2 Direction);
 
 #endif

@@ -162,7 +162,9 @@ void TBox::DrawBox()
 	//Line
 	if (m_pLineSprite != nullptr)
 	{
-		GfxLineSpriteReset(m_pLineSprite);
+		if (m_pLineSprite != nullptr)
+			GfxLineSpriteReset(m_pLineSprite);
+
 		GfxLineSpriteSetDrawingColor(m_pLineSprite, GfxColor(150, 150, 150, 255));
 		TGfxVec2 tAxisX = TGfxVec2(m_fRay_W, 0).Rotate(GfxMathDegToRad(m_fAngle))*m_fScale;
 		TGfxVec2 tAxisY = TGfxVec2(0, m_fRay_H).Rotate(GfxMathDegToRad(m_fAngle))*m_fScale;

@@ -33,3 +33,22 @@ float SC_GetAngleVector(TGfxVec2  & Position, TGfxVec2 Direction)
 	return fAngle;
 }
 
+EDirection SC_GetDirectionVector(TGfxVec2  & Position, TGfxVec2 Direction)
+{
+	TGfxVec2 Vecteur(Direction - Position);
+
+	float hypothenuse = Vecteur.Length();
+	float fAngle = GfxMathRadToDeg(acos(Vecteur.x / hypothenuse));
+
+	if (Vecteur.y > 0) fAngle *= -1;
+
+	if (fAngle >= -45.0f && fAngle < 45.0f)
+		return EDirection_Right;
+	else if (fAngle >= 45.0f && fAngle < 135.0f)
+		return EDirection_Up;
+	else if (fAngle < -45.0f && fAngle >= -135.0f)
+		return EDirection_Down;
+	else
+		return EDirection_Left;
+}
+
