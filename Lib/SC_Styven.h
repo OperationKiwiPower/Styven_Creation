@@ -12,6 +12,7 @@
 
 enum EDirection
 {
+	EDirection_Unknow,
 	EDirection_Up,
 	EDirection_Down,
 	EDirection_Left,
@@ -19,6 +20,8 @@ enum EDirection
 };
 
 void CalculateDebugTime(const char * pText);
+
+float SC_GetAngleVector(TGfxVec2 Direction);
 float SC_GetAngleVector(TGfxVec2  & Position, TGfxVec2 Direction);
 EDirection SC_GetDirectionVector(TGfxVec2  & Position, TGfxVec2 Direction);
 

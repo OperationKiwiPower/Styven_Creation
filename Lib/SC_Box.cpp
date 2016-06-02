@@ -233,12 +233,19 @@ void TBox::SetTextColor(unsigned int iColor)
 void TBox::SetScale(const float fScale)
 {
 	m_fScale = fScale;
-	GfxSpriteSetScale(m_pSprite, m_fScale, m_fScale);
+	if (m_pSprite != nullptr)
+		GfxSpriteSetScale(m_pSprite, m_fScale, m_fScale);
+	if (m_pTextSprite != nullptr)
+		GfxSpriteSetScale(m_pTextSprite, m_fScale, m_fScale);
+
 }
 void TBox::SetScale(const float fScaleX,const float fScaleY)
 {
 	m_fScale = fScaleY;
-	GfxSpriteSetScale(m_pSprite, fScaleX, fScaleY);
+	if (m_pSprite != nullptr)
+		GfxSpriteSetScale(m_pSprite, fScaleX, fScaleY);
+	if (m_pTextSprite != nullptr)
+		GfxSpriteSetScale(m_pTextSprite, fScaleX, fScaleY);
 }
 void TBox::SetCutOut(const int iIndex)
 {

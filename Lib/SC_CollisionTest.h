@@ -8,6 +8,9 @@
 class TBoxCollider
 {
 public:
+	TBoxCollider();
+	~TBoxCollider();
+
 	TGfxVec2 m_tSpot_LH;
 	TGfxVec2 m_tSpot_RD;
 	
@@ -15,8 +18,8 @@ public:
 	
 	bool IsCollid(TBoxCollider m_bColid);
 	bool IsCollid(TGfxVec2 tPoint);
-
 };
+
 class TCercleCollider
 {
 public:

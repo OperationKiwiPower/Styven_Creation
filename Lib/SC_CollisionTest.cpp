@@ -2,6 +2,16 @@
 #include"flib_vec2.h"
 #include"SC_CollisionTest.h"
 
+TBoxCollider::TBoxCollider()
+{
+	m_tSpot_LH = TGfxVec2(0.0f,0.0f);
+	m_tSpot_RD = TGfxVec2(0.0f,0.0f);
+}
+TBoxCollider::~TBoxCollider()
+{
+
+}
+
 bool TBoxCollider::IsCollid(TBoxCollider m_bColid)
 {
 	//LH
