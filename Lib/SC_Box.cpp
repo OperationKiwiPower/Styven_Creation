@@ -70,14 +70,16 @@ void TBox::CreateBox(unsigned int m_iColor, const bool bText, const bool bSprite
 		SetColor(m_iColor);
 	}
 }
-void TBox::CreateSpriteBox(TGfxTexture * pTexture, const int iTextureSize, int iTileX, int iTileY)
+void TBox::CreateSpriteBox(TGfxTexture * pTexture, const int iTextureSize, int iTileX, int iTileY, int iTextureSizeY)
 {
+	iTextureSizeY = (iTextureSizeY != 0) ? iTextureSizeY : iTextureSize;
+
 	m_bIsDrawable = true;
 	m_pSprite = GfxSpriteCreate(pTexture);
 	GfxSpriteSetFilteringEnabled(m_pSprite, false);
-	GfxSpriteSetCutout(m_pSprite, iTileX*iTextureSize, iTileY*iTextureSize, iTextureSize, iTextureSize);
-	GfxSpriteSetPivot(m_pSprite, iTextureSize / 2.0f, iTextureSize / 2.0f);
-	SetBox(TGfxVec2(0.0f, 0.0f), (float)iTextureSize, (float)iTextureSize);
+	GfxSpriteSetCutout(m_pSprite, iTileX*iTextureSize, iTileY*iTextureSizeY, iTextureSize, iTextureSizeY);
+	GfxSpriteSetPivot(m_pSprite, iTextureSize / 2.0f, iTextureSizeY / 2.0f);
+	SetBox(TGfxVec2(0.0f, 0.0f), (float)iTextureSize, (float)iTextureSizeY);
 }
 void TBox::CreateSpriteBox(TGfxTexture * pTexture)
 {
@@ -250,7 +252,6 @@ void TBox::SetScale(const float fScaleX,const float fScaleY)
 void TBox::SetCutOut(const int iIndex)
 {
 	int iNumberWidth = (GfxSpriteGetTextureSizeX(m_pSprite) / int(m_fRay_W));
-	//int iNumberHeight = (GfxSpriteGetTextureSizeY(m_pSprite) / int(m_fRay_H));
 
 	int iTileX = iIndex % iNumberWidth;
 	int iTileY = iIndex / iNumberWidth;
